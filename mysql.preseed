@@ -1,0 +1,6 @@
+mysql-server-5.5	mysql-server/root_password_again	password r00t
+mysql-server-5.5	mysql-server/root_password	password r00t
+mysql-server-5.5	mysql-server-5.5/postrm_remove_databases	boolean	false
+mysql-server-5.5	mysql-server-5.5/nis_warning	note	
+mysql-server-5.5	mysql-server-5.5/really_downgrade	boolean	false
+mysql-server-5.5	mysql-server-5.5/start_on_boot	boolean	true
