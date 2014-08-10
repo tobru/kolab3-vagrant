@@ -1,0 +1,4 @@
+class kolab::config {
+
+
+}
