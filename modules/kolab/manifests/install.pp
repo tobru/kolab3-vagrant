@@ -9,6 +9,15 @@ class kolab::install {
     before => Package['kolab']
   }
 
+  # Workaround until GPG key are fixed
+  file { '/etc/apt/apt.conf.d/99auth':
+    owner   => root,
+    group   => root,
+    content => "APT::Get::AllowUnauthenticated yes;",
+    mode    => 644,
+    before  => Package['kolab']
+  }
+
   if $kolab::version == 'development' {
     apt::source {
       'kolab-debian-development':
