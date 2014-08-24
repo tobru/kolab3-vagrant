@@ -13,6 +13,18 @@ sudo su
 setup-kolab
 ```
 
+## Good to know
+
+### api_url for NATed ports
+
+To get the kolab-webadmin working, the api_url needs to be configured after `setup-kolab` in `/etc/kolab/kolab.conf`:
+
+```
+[kolab_wap]
+[...]
+api_url = http://localhost:80/kolab-webadmin/api
+```
+
 ## The MIT License (MIT)
 
 ```
