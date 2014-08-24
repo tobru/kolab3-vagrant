@@ -69,4 +69,11 @@ class kolab::install {
     }
   }
 
+  if $kolab::version == '3.3' {
+    file { '/usr/share/pyshared/pykolab/setup/setup_roundcube.py':
+      source  => 'puppet:///modules/kolab/fix-3.3-setup_roundcube.py',
+      require => Package['kolab'],
+    }
+  }
+
 }
