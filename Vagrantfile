@@ -18,5 +18,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # forward the necessary ports
+  config.vm.network "forwarded_port", guest: 25, host: 1025
   config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 110, host: 10110
+  config.vm.network "forwarded_port", guest: 143, host: 10143
+  config.vm.network "forwarded_port", guest: 443, host: 10443
+  config.vm.network "forwarded_port", guest: 587, host: 10587
+  config.vm.network "forwarded_port", guest: 993, host: 10993
+  config.vm.network "forwarded_port", guest: 995, host: 10995
 end
