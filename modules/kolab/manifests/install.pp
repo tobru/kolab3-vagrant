@@ -10,25 +10,25 @@ class kolab::install {
   }
 
   # Workaround until GPG key are fixed
-  file { '/etc/apt/apt.conf.d/99auth':
-    owner   => root,
-    group   => root,
-    content => "APT::Get::AllowUnauthenticated yes;",
-    mode    => 644,
-    before  => Package['kolab']
-  }
+  #file { '/etc/apt/apt.conf.d/99auth':
+  #  owner   => root,
+  #  group   => root,
+  #  content => "APT::Get::AllowUnauthenticated yes;",
+  #  mode    => 644,
+  #  before  => Package['kolab']
+  #}
 
   if $kolab::version == 'development' {
     apt::source {
       'kolab-debian-development':
         ensure      => present,
-        location    => 'http://obs.kolabsys.com:82/Kolab:/Development/Debian_7.0/',
+        location    => "http://obs.kolabsys.com/repositories/Kolab:/Development/Debian_7.0/",
         release     => '',
         repos       => './',
         pin         => '501',
         include_src => false,
         key         => '14C8875B',
-        key_source  => 'http://obs.kolabsys.com:82/Kolab:/Development/Debian_7.0/Release.key';
+        key_source  => 'http://obs.kolabsys.com/repositories/Kolab:/Development/Debian_7.0/Release.key';
 
       'opensuse-obs':
         ensure      => present,
@@ -46,23 +46,23 @@ class kolab::install {
     apt::source {
       "kolab-debian-${kolab::version}":
         ensure      => present,
-        location    => "http://obs.kolabsys.com:82/Kolab:/${kolab::version}/Debian_7.0/",
+        location    => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}/Debian_7.0/",
         release     => '',
         repos       => './',
         pin         => '501',
         include_src => false,
         key         => 'B4F6D430',
-        key_source  => "http://obs.kolabsys.com:82/Kolab:/${kolab::version}/Debian_7.0/Release.key";
+        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}/Debian_7.0/Release.key";
 
       "kolab-debian-${kolab::version}-updates":
         ensure      => present,
-        location    => "http://obs.kolabsys.com:82/Kolab:/${kolab::version}:/Updates/Debian_7.0/",
+        location    => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}:/Updates/Debian_7.0/",
         release     => '',
         repos       => './',
         pin         => '501',
         include_src => false,
         key         => 'B4F6D430',
-        key_source  => "http://obs.kolabsys.com:82/Kolab:/${kolab::version}:/Updates/Release.key";
+        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}:/Updates/Debian_7.0/Release.key";
     } ->
     package { 'kolab':
       ensure  => present,
