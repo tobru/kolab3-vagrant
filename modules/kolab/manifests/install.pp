@@ -51,7 +51,7 @@ class kolab::install {
         repos       => './',
         pin         => '501',
         include_src => false,
-        key         => 'B4F6D430',
+        key         => '158A77FF',
         key_source  => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}/Debian_7.0/Release.key";
 
       "kolab-debian-${kolab::version}-updates":
@@ -61,7 +61,7 @@ class kolab::install {
         repos       => './',
         pin         => '501',
         include_src => false,
-        key         => 'B4F6D430',
+        key         => '158A77FF',
         key_source  => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}:/Updates/Debian_7.0/Release.key";
     } ->
     package { 'kolab':
