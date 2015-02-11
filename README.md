@@ -9,11 +9,19 @@ git clone https://github.com/tobru/kolab3-vagrant.git
 cd kolab3-vagrant
 vagrant up
 vagrant ssh
-sudo su
+sudo -i
 setup-kolab
 ```
 
 ## Good to know
+
+### Accessing WAP and Roundcube Webmail
+
+Apache is mapped to the local port 8080. So you can access the Roundcube
+Webmail and the Kolab Web Admin Panel using the following URLs on your host:
+
+* http://localhost:8080/roundcubemail/
+* http://localhost:8080/kolab-webadmin/
 
 ### api_url for NATed ports
 
@@ -28,7 +36,7 @@ api_url = http://localhost:80/kolab-webadmin/api
 ## The MIT License (MIT)
 
 ```
-Copyright (c) 2014 Tobias BRunner
+Copyright (c) 2015 Tobias Brunner
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
