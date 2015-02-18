@@ -7,8 +7,8 @@ For an introduction, please visit [tobrunet.ch](https://tobrunet.ch/articles/kol
 ```
 git clone https://github.com/tobru/kolab3-vagrant.git
 cd kolab3-vagrant
-vagrant up
-vagrant ssh
+vagrant up [ ubuntu-trusty | debian-wheezy ]
+vagrant ssh [ ubuntu-trusty | debian-wheezy ]
 sudo -i
 setup-kolab
 ```
@@ -22,6 +22,9 @@ Webmail and the Kolab Web Admin Panel using the following URLs on your host:
 
 * http://localhost:8080/roundcubemail/
 * http://localhost:8080/kolab-webadmin/
+
+*Note*: Vagrant is configured to automatically remap the ports. So have a look
+at the output of Vagrant to see to which port it really mapped.
 
 ### api_url for NATed ports
 
