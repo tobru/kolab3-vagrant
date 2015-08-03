@@ -9,26 +9,32 @@ class kolab::install {
     before => Package['kolab']
   }
 
+  $_ospath = $::operatingsystem ? {
+    'Ubuntu' => "${::operatingsystem}_${::operatingsystemrelease}",
+    'Debian' => "${::operatingsystem}_${::lsbmajdistrelease}.0",
+    default  => fail("unsupported ${::operatingsystem}"),
+  }
+
   if $kolab::version == 'development' {
     apt::source {
       'kolab-development':
         ensure      => present,
-        location    => "http://obs.kolabsys.com/repositories/Kolab:/Development/${::operatingsystem}_${::operatingsystemrelease}/",
+        location    => "http://obs.kolabsys.com/repositories/Kolab:/Development/${_ospath}",
         release     => '',
         repos       => './',
         pin         => '501',
         include_src => false,
         key         => '14C8875B',
-        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/Development/${::operatingsystem}_${::operatingsystemrelease}/Release.key";
+        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/Development/${_ospath}/Release.key";
 
       'opensuse-obs':
         ensure      => present,
-        location    => "http://download.opensuse.org/repositories/openSUSE:Tools/x${::operatingsystem}_${::operatingsystemrelease}/",
+        location    => "http://download.opensuse.org/repositories/openSUSE:Tools/x${_ospath}",
         release     => '',
         repos       => '/',
         include_src => false,
         key         => 'EEFEFDE9',
-        key_source  => "http://download.opensuse.org/repositories/openSUSE:Tools/x${::operatingsystem}_${::operatingsystemrelease}/Release.key";
+        key_source  => "http://download.opensuse.org/repositories/openSUSE:Tools/x${_ospath}/Release.key";
     } ->
     package { [ 'kolab', 'osc', 'build' ]:
       ensure  => present,
@@ -37,23 +43,23 @@ class kolab::install {
     apt::source {
       "kolab-${kolab::version}":
         ensure      => present,
-        location    => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}/${::operatingsystem}_${::operatingsystemrelease}/",
+        location    => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}/${_ospath}",
         release     => '',
         repos       => './',
         pin         => '501',
         include_src => false,
         key         => '158A77FF',
-        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}/${::operatingsystem}_${::operatingsystemrelease}/Release.key";
+        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}/${_ospath}/Release.key";
 
       "kolab-${kolab::version}-updates":
         ensure      => present,
-        location    => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}:/Updates/${::operatingsystem}_${::operatingsystemrelease}/",
+        location    => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}:/Updates/${_ospath}",
         release     => '',
         repos       => './',
         pin         => '501',
         include_src => false,
         key         => '158A77FF',
-        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}:/Updates/${::operatingsystem}_${::operatingsystemrelease}/Release.key";
+        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}:/Updates/${_ospath}/Release.key";
     } ->
     package { 'kolab':
       ensure  => present,
