@@ -14,27 +14,41 @@ class kolab::install {
     'Debian' => "${::operatingsystem}_${::lsbmajdistrelease}.0",
     default  => fail("unsupported ${::operatingsystem}"),
   }
+  $_ospath_suse = $::operatingsystem ? {
+    'Ubuntu' => "x${::operatingsystem}_${::operatingsystemrelease}",
+    'Debian' => "${::operatingsystem}_${::lsbmajdistrelease}.0",
+    default  => fail("unsupported ${::operatingsystem}"),
+  }
 
   if $kolab::version == 'development' {
     apt::source {
       'kolab-development':
         ensure      => present,
         location    => "http://obs.kolabsys.com/repositories/Kolab:/Development/${_ospath}",
-        release     => '',
+        release     => ' ',
         repos       => './',
         pin         => '501',
-        include_src => false,
-        key         => '14C8875B',
-        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/Development/${_ospath}/Release.key";
-
+        key         => {
+          'id' => '79D86A05FDE6C9FB4E43A6C5830C2BCF446D5A45',
+          'source' => "http://obs.kolabsys.com/repositories/Kolab:/Development/${_ospath}/Release.key",
+        },
+        include  => {
+          'src' => true,
+          'deb' => true,
+        };
       'opensuse-obs':
         ensure      => present,
-        location    => "http://download.opensuse.org/repositories/openSUSE:Tools/x${_ospath}",
-        release     => '',
+        location    => "http://download.opensuse.org/repositories/openSUSE:/Tools/${_ospath_suse}",
+        release     => ' ',
         repos       => '/',
-        include_src => false,
-        key         => 'EEFEFDE9',
-        key_source  => "http://download.opensuse.org/repositories/openSUSE:Tools/x${_ospath}/Release.key";
+        key         => {
+          'id' => '0A031153E2F5E9DB71510D8C85753AA5EEFEFDE9',
+          'source' => "http://download.opensuse.org/repositories/openSUSE:/Tools/${_ospath_suse}/Release.key",
+        },
+        include  => {
+          'src' => true,
+          'deb' => true,
+        };
     } ->
     package { [ 'kolab', 'osc', 'build' ]:
       ensure  => present,
@@ -44,22 +58,31 @@ class kolab::install {
       "kolab-${kolab::version}":
         ensure      => present,
         location    => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}/${_ospath}",
-        release     => '',
+        release     => ' ',
         repos       => './',
         pin         => '501',
-        include_src => false,
-        key         => '158A77FF',
-        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}/${_ospath}/Release.key";
-
+        key         => {
+          'id' => '79D86A05FDE6C9FB4E43A6C5830C2BCF446D5A45',
+          'source' => "http://obs.kolabsys.com/repositories/Kolab:/Development/${_ospath}/Release.key",
+        },
+        include  => {
+          'src' => true,
+          'deb' => true,
+        };
       "kolab-${kolab::version}-updates":
         ensure      => present,
         location    => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}:/Updates/${_ospath}",
-        release     => '',
+        release     => ' ',
         repos       => './',
         pin         => '501',
-        include_src => false,
-        key         => '158A77FF',
-        key_source  => "http://obs.kolabsys.com/repositories/Kolab:/${kolab::version}:/Updates/${_ospath}/Release.key";
+        key         => {
+          'id' => '79D86A05FDE6C9FB4E43A6C5830C2BCF446D5A45',
+          'source' => "http://obs.kolabsys.com/repositories/Kolab:/Development/${_ospath}/Release.key",
+        },
+        include  => {
+          'src' => true,
+          'deb' => true,
+        };
     } ->
     package { 'kolab':
       ensure  => present,

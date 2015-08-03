@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vmconfig.vm.hostname = "debian-wheezy.kolab3.dev"
 
     # first install puppet in vm
-    vmconfig.vm.provision "shell", inline: "apt-get -y install puppet"
+    vmconfig.vm.provision :shell, :path => 'install_puppet.sh'
     # second run puppet to get kolab into it
     vmconfig.vm.provision "puppet" do |puppet|
       puppet.module_path = "modules"
@@ -38,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vmconfig.vm.hostname = "ubuntu-trusty.kolab3.dev"
 
     # first install puppet in vm
-    vmconfig.vm.provision "shell", inline: "apt-get -y install puppet"
+    vmconfig.vm.provision :shell, :path => 'install_puppet.sh'
     # second run puppet to get kolab into it
     vmconfig.vm.provision "puppet" do |puppet|
       puppet.module_path = "modules"
